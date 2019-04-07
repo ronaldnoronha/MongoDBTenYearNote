@@ -6,7 +6,7 @@ with open(instr_file) as f:
         for i in lines:
             counter += 1
             test_file.write(i)
-            if counter >100:
+            if counter >1000000:
                 break
 test_file.close()
 
