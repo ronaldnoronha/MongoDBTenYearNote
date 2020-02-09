@@ -23,7 +23,7 @@ if __name__ == '__main__':
     myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 
     # create database
-    mydb = myclient["mydatabase"]
+    mydb = myclient["test10year"]
 
     # create collection
     mycol = mydb["raw_ticks"]
@@ -52,7 +52,7 @@ if __name__ == '__main__':
                 mylist.append(my_dict)
             counter += 1
             # if counter==threshold:
-            #     print(threshold, " done",time.time())
+            #     print(threshold, " done",tigit me.time())
             #     threshold += int(threshold*0.1)
 
 
