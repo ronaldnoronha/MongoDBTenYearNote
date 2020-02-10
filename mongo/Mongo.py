@@ -23,3 +23,4 @@ class Mongo:
     def add_documents(self, documents):
 
         self.mycol.insert_many(documents)
+

@@ -1,6 +1,7 @@
 from mongo import Mongo
 import time
 from datetime import datetime
+import pymongo
 
 def convert_to_datetime(date, time):
     # date 2015/10/6
@@ -42,7 +43,7 @@ with open('test_file.txt') as f:
     for i in lines:
         if counter > 0:
             words = i.split(", ")
-            my_dict = {'datetime':convert_to_datetime(words[0], words[1]).__str__(),'instrument':instrument,
+            my_dict = {'datetime':convert_to_datetime(words[0], words[1]),'instrument':instrument,
                       'price':words[2],'volume':int(words[6]),'delta':int(words[9]) - int(words[8])}
 
             mylist.append(my_dict)
@@ -54,7 +55,27 @@ ticks.add_documents(mylist)
 t2 = time.time()
 
 print(t2-t1," seconds")
-
+mycol.create_index("datetime")
 print(mycol.count_documents({}).__str__()," entries")
 
+mylist = []
+with open('test_file2.txt') as f:
+    counter = 0
+    lines = f.readlines()
+    instrument='TYAH16'
 
+    for i in lines:
+        if counter > 0:
+            words = i.split(", ")
+            my_dict = {'datetime':convert_to_datetime(words[0], words[1]),'instrument':instrument,
+                      'price':words[2],'volume':int(words[6]),'delta':int(words[9]) - int(words[8])}
+
+            mylist.append(my_dict)
+        counter += 1
+
+
+ticks.add_documents(mylist)
+t2 = time.time()
+
+print(t2-t1," seconds")
+print(mycol.count_documents({}).__str__()," entries")
