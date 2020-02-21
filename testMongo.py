@@ -55,27 +55,37 @@ ticks.add_documents(mylist)
 t2 = time.time()
 
 print(t2-t1," seconds")
-mycol.create_index("datetime")
+# ticks.create_index_datetime()
 print(mycol.count_documents({}).__str__()," entries")
 
-mylist = []
-with open('test_file2.txt') as f:
-    counter = 0
-    lines = f.readlines()
-    instrument='TYAH16'
+instrument = mylist[0]["instrument"]
+order=1
+aggregate_string = [{"$match":{"instrument":instrument}},{"$sort":{"datetime":order}},{"$limit":1}]
+x = mycol.aggregate(aggregate_string)
+print(x)
 
-    for i in lines:
-        if counter > 0:
-            words = i.split(", ")
-            my_dict = {'datetime':convert_to_datetime(words[0], words[1]),'instrument':instrument,
-                      'price':words[2],'volume':int(words[6]),'delta':int(words[9]) - int(words[8])}
+#
+# mylist = []
+# with open('test_file2.txt') as f:
+#     counter = 0
+#     lines = f.readlines()
+#     instrument='TYAH16'
+#
+#     for i in lines:
+#         if counter > 0:
+#             words = i.split(", ")
+#             my_dict = {'datetime':convert_to_datetime(words[0], words[1]),'instrument':instrument,
+#                       'price':words[2],'volume':int(words[6]),'delta':int(words[9]) - int(words[8])}
+#
+#             mylist.append(my_dict)
+#         counter += 1
+#
+#
+# ticks.add_documents(mylist)
+# t2 = time.time()
+#
+# print(t2-t1," seconds")
+# print(mycol.count_documents({}).__str__()," entries")
 
-            mylist.append(my_dict)
-        counter += 1
 
 
-ticks.add_documents(mylist)
-t2 = time.time()
-
-print(t2-t1," seconds")
-print(mycol.count_documents({}).__str__()," entries")

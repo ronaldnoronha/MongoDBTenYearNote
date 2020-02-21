@@ -6,9 +6,15 @@ with open(instr_file) as f:
         lines = f.readlines()
         for i in lines:
             counter += 1
-            if counter <=1000000:
+            if counter == 1:
                 test_file.write(i)
-            elif counter <2000000:
+                test_file2.write(i)
+            elif counter <=5001:
+                test_file.write(i)
+            elif counter <=10001:
+                test_file.write(i)
+                test_file2.write(i)
+            elif counter <=15001:
                 test_file2.write(i)
 test_file.close()
 
